@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Personal Profile Form</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+body{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(-45deg,#4f46e5,#06b6d4,#8b5cf6,#ec4899);
+    background-size:400% 400%;
+    animation:bgMove 12s ease infinite;
+    padding:20px;
+}
+
+@keyframes bgMove{
+    0%{background-position:0% 50%;}
+    50%{background-position:100% 50%;}
+    100%{background-position:0% 50%;}
+}
+
+.container{
+    width:100%;
+    max-width:700px;
+    backdrop-filter:blur(15px);
+    background:rgba(255,255,255,0.15);
+    border:1px solid rgba(255,255,255,0.2);
+    border-radius:25px;
+    padding:30px;
+    color:white;
+    box-shadow:0 15px 40px rgba(0,0,0,.2);
+    animation:fadeIn 1s ease;
+}
+
+@keyframes fadeIn{
+    from{
+        opacity:0;
+        transform:translateY(40px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+h1{
+    text-align:center;
+    margin-bottom:25px;
+}
+
+.profile-upload{
+    text-align:center;
+    margin-bottom:20px;
+}
+
+.profile-upload img{
+    width:140px;
+    height:140px;
+    border-radius:50%;
+    object-fit:cover;
+    border:4px solid white;
+    transition:.4s;
+}
+
+.profile-upload img:hover{
+    transform:scale(1.05) rotate(3deg);
+}
+
+.profile-upload input{
+    margin-top:10px;
+    color:white;
+}
+
+.form-group{
+    margin-bottom:15px;
+}
+
+label{
+    display:block;
+    margin-bottom:6px;
+    font-weight:600;
+}
+
+input,
+textarea{
+    width:100%;
+    padding:12px;
+    border:none;
+    outline:none;
+    border-radius:12px;
+    background:rgba(255,255,255,.2);
+    color:white;
+}
+
+input::placeholder,
+textarea::placeholder{
+    color:#eee;
+}
+
+textarea{
+    resize:none;
+    height:100px;
+}
+
+button{
+    width:100%;
+    padding:14px;
+    border:none;
+    border-radius:12px;
+    background:white;
+    color:#4f46e5;
+    font-size:18px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:.3s;
+}
+
+button:hover{
+    transform:translateY(-3px);
+    box-shadow:0 10px 25px rgba(255,255,255,.3);
+}
+
+.profile-card{
+    display:none;
+    margin-top:25px;
+    background:rgba(255,255,255,.15);
+    padding:20px;
+    border-radius:15px;
+    animation:slideUp .7s ease;
+}
+
+@keyframes slideUp{
+    from{
+        opacity:0;
+        transform:translateY(30px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+.profile-card h2{
+    margin-bottom:10px;
+}
+
+.profile-card p{
+    margin:5px 0;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Personal Profile Form</h1>
+
+    <div class="profile-upload">
+        <img id="preview"
+        src="h-1.jpg"
+        alt="Profile">
+        <br>
+        <input type="file" id="imageInput" accept="image/*">
+    </div>
+
+    <div class="form-group">
+        <label>Name</label>
+        <input type="text" id="name" placeholder="Enter your name">
+    </div>
+
+    <div class="form-group">
+        <label>Email</label>
+        <input type="email" id="email" placeholder="Enter email">
+    </div>
+
+    <div class="form-group">
+        <label>Profession</label>
+        <input type="text" id="profession" placeholder="Web Developer">
+    </div>
+
+    <div class="form-group">
+        <label>Bio</label>
+        <textarea id="bio" placeholder="Tell something about yourself"></textarea>
+    </div>
+
+    <div class="form-group">
+        <label>Website</label>
+        <input type="text" id="website" placeholder="https://yourwebsite.com">
+    </div>
+
+    <button onclick="generateProfile()">
+        Create My Profile
+    </button>
+
+    <div class="profile-card" id="profileCard">
+        <h2 id="showName"></h2>
+        <p><strong>Email:</strong> <span id="showEmail"></span></p>
+        <p><strong>Profession:</strong> <span id="showProfession"></span></p>
+        <p><strong>Bio:</strong> <span id="showBio"></span></p>
+        <p><strong>Website:</strong> <span id="showWebsite"></span></p>
+    </div>
+</div>
+
+<script>
+// Image Preview
+document.getElementById("imageInput").addEventListener("change", function(e){
+    const file = e.target.files[0];
+
+    if(file){
+        const reader = new FileReader();
+
+        reader.onload = function(event){
+            document.getElementById("preview").src = event.target.result;
+        }
+
+        reader.readAsDataURL(file);
+    }
+});
+
+// Create Profile
+function generateProfile(){
+
+    document.getElementById("showName").textContent =
+        document.getElementById("name").value;
+
+    document.getElementById("showEmail").textContent =
+        document.getElementById("email").value;
+
+    document.getElementById("showProfession").textContent =
+        document.getElementById("profession").value;
+
+    document.getElementById("showBio").textContent =
+        document.getElementById("bio").value;
+
+    document.getElementById("showWebsite").textContent =
+        document.getElementById("website").value;
+
+    document.getElementById("profileCard").style.display = "block";
+
+    document.getElementById("profileCard").scrollIntoView({
+        behavior:"smooth"
+    });
+}
+</script>
+
+</body>
+</html>
